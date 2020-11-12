@@ -1,0 +1,19 @@
+#! /bin/bash
+
+i=0
+for f in ~/familyClassification/classifi_fam/with_hash_train/test_withoutspace/*
+    do
+
+	   p=`awk -F',' '{ print $3 }' $f`
+	   length=${#p} 
+	   if [ $length -lt 40 ]
+	   then
+		   i=$((i+1))
+		   rm $f
+	   fi
+	 
+
+
+
+    done
+    echo $i

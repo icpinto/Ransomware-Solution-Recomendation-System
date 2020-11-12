@@ -1,0 +1,28 @@
+#!/bin/bash
+for ((i=1 ; i < 10266 ; i++)); 
+do 
+   cd $i
+   echo $i
+   name="$(jq .target task.json |  sed 's/[^a-zA-Z0-9]//g'| tail -c 33)"
+   proc="$(jq  '.behavior.processes[].process_path' reports/report.json | wc -l )"
+   fam="$(jq '.scans.Microsoft.result' ~/json/par1/"$name".json )"
+   value2=${fam#*/}
+   value="$(echo "$value2" | cut -d. -f1 | sed 's/[^a-zA-Z0-9]//g')"
+   echo $value
+   cd ..
+   cd correct_fam
+   if [ ! -d "$value" ]; then
+   		# Control will enter here if $DIRECTORY doesn't exist.
+   		mkdir "$value"
+   fi
+   cd $i
+   for j in $(seq 0 $proc);
+	 do
+		 #echo $i;
+		 seq="$(jq --argjson n "$j" '.behavior.processes[$n].calls[].api' reports/report.json |  sed 's/[^a-zA-Z0-9]//g')" 
+		echo $seq >> ~/analyses/"$value"/"$name"
+	 done
+   cd ..
+   cd ..
+done
+

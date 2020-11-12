@@ -1,0 +1,11 @@
+#! /bin/bash
+    for f in ~/familyClassification/classifi_fam/not_fam/all/*
+        do
+        #echo $f
+	    #mv $f ~/all_fam
+	    file=$(basename $f)
+	    echo $file
+	    tr '\n' ' ' < $f > ~/familyClassification/classifi_fam/not_fam/without_space/"$file".csv
+	   #echo "" >> $f
+    done
+

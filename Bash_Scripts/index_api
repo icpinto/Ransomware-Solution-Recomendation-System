@@ -1,0 +1,29 @@
+#!/bin/bash
+
+
+for i in `cat uniq_api`
+do
+	#echo "$i"
+	catg="$(jq --arg i "$i" '.behavior.processes[].calls[] | select(.api==$i)|.category' reports/report.json | head -1 |  sed 's/[^a-zA-Z0-9]//g')" # get the category name
+	#echo "$catg"
+	if [ -f "$catg" ]
+	then
+		if grep -q "$i" "$catg";
+		then 
+			line_no="$(awk "/$i/{ print NR; exit }" $catg)"  #get the line number
+			sym_catg="$(echo ${catg:0:3})"
+			fin_sym="${sym_catg}${line_no}"
+			echo $fin_sym
+			
+			#echo "FOUND";
+		else
+			echo "$i" >>$catg
+		fi
+	else
+		touch "$catg"
+		echo "$i" >$catg
+
+	fi
+
+	echo $i
+done

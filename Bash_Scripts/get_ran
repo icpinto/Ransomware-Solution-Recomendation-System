@@ -1,0 +1,16 @@
+#!/bin/bash
+
+i=0
+while IFS= read -r line
+do
+
+if [[ "$line" ==  *"Ransom"* ]]; then
+  sed "${i}q;d" result.txt >> ransom_hash2.txt
+  echo $i
+fi
+((i=i+1))
+
+
+
+done < result.txt
+

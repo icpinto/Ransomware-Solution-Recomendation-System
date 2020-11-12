@@ -1,0 +1,9 @@
+#! /bin/bash
+    for f in ~/familyClassification/classifi_fam/with_hash_train/test_withoutspace/*
+        do
+        #echo $f
+	    #mv $f ~/all_fam
+	   # tr '\n' ' ' < $f > ~/familyClassification/classifi_fam/with_hash_train/test_withoutspace/`cat /dev/urandom | tr -cd 'a-f0-9' | head -c 32`.csv
+	   echo "" >> $f
+    done
+
